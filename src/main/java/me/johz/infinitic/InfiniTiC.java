@@ -27,7 +27,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import slimeknights.tconstruct.library.fluid.FluidMolten;
 import slimeknights.tconstruct.smeltery.block.BlockMolten;
 import me.johz.infinitic.client.Command;
-import me.johz.infinitic.client.ResourceManager;
 import me.johz.infinitic.client.model.InfiniFluidStateMapper;
 import me.johz.infinitic.lib.data.MaterialData;
 import me.johz.infinitic.lib.data.MaterialJSON;
@@ -49,7 +48,6 @@ public class InfiniTiC {
     public static ResourceLocation ICON_FlowingFluid = new ResourceLocation(InfiniTiC.MODID, "blocks/flowing_fluid");
     
     public static MaterialData[] MATERIALS;
-    public static ResourceManager resourceManager;
     
     static {
         FluidRegistry.enableUniversalBucket();
@@ -76,8 +74,6 @@ public class InfiniTiC {
 	    	}
 	    	
 	    	//Event Handler... to handle all our events!
-	    	resourceManager = new ResourceManager();
-        ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager);
 	    	MinecraftForge.EVENT_BUS.register(new InfiniEvents());
     }
 

@@ -89,6 +89,7 @@ public class MaterialData {
 			}
 
 	    		addMaterialStats();
+	        addLocalization();
 	        
 	    }
 	}
@@ -140,6 +141,15 @@ public class MaterialData {
 		material = new Material(json.name, json.getTextColorInt());
         material.setCraftable(false).setCastable(true);
 
+	}
+
+	private void addLocalization() {
+		for (LocalizationJSON locale: json.localizations) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("material." + json.name.toLowerCase() + ".name", locale.solid);
+			map.put("fluid.infinitic." + json.name.toLowerCase() + ".name", locale.liquid);
+			LanguageRegistry.instance().injectLanguage(locale.locale, map);
+		}
 	}
 
 	private void getSolids()
