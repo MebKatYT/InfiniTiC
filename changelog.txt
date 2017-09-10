@@ -1,3 +1,26 @@
+v0.1.28
+Updated to MC version 1.11.2
+New auto build numbers... publishes may skip numbers now.
+Added Forge's update tracking system.
+
+v0.1.7
+Updated to MC version 1.10.2
+Added "/infinitic traits" command.
+Added traits array to JSON.
+Added Bow stats to JSON.
+Added Projectile option to JSON.
+Re-named some inconsistent fields in JSON.
+
+v0.1.6
+Available for MC versions 1.8.9 and 1.9.4
+Updated to MC 1.8.9, Forge 11.15.1.2318, TConstruct 2.2.1, Java 1.8
+NEW JSON format. Should be backward compatible!!??  Check the wiki for an example.
+Added some default values, which should make the JSON parsing a little more forgiving.
+Removed Infini-Buckets (shed a small tear) in favour of Forge Buckets.
+Kept and fixed Infini-Fluids.
+Added "/infinitic hand" command.  Very similar (borrowed from) CraftTweaker.  Formatting tweaks for this mod.
+Added smelting and casting of Gems (hurrah!).
+
 v0.1.5
 Tools and parts are now named correctly (using the "solid" entry from the localizations)
 The "Jagged" modifier can now be applied (using a negative Stonebound value) Thanks to Runeforger678 for raising the issue.
