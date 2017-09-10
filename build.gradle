@@ -1,3 +1,5 @@
+import groovy.json.*
+
 buildscript {
     repositories {
         mavenCentral()
@@ -34,6 +36,7 @@ repositories {
 
 // Define properties file
 ext.configFile = file "build.properties"
+ext.numbersFile = file "buildno.properties"
 
 configFile.withReader {
     // Load config.  It shall from now be referenced as simply config or project.config
@@ -138,6 +141,12 @@ processResources
     }
 }
 
+task incrementBuildNumber(dependsOn: 'reobfJar') {
+    config.build_number = (config.build_number.toString().toInteger()) + 1
+    configFile.withWriter {
+        config.toProperties().store(it, "")
+    }
+}
 
 // Create deobf dev jars
 task deobfJar(type: Jar) {
@@ -150,6 +159,22 @@ artifacts {
 }
 
 curseforge {
+
+    def updateJsonFile = file('version/update.json')
+    def updateJson = new JsonSlurper().parse(updateJsonFile) as Map
+	
+	// Ensure there is a section for this MC version
+	updateJson.get("${minecraft.version}" as String, [:])
+
+    // Add to version section
+    updateJson."${minecraft.version}"."${version}" = "See https://github.com/LakMoore/InfiniTiC/blob/master/changelog.txt"
+
+    // Update promos
+    updateJson.promos."${minecraft.version}-latest" = "${version}"
+    updateJson.promos."${minecraft.version}-recommended" = "${version}"
+
+    updateJsonFile.write(JsonOutput.prettyPrint(JsonOutput.toJson(updateJson)))
+    
 	apiKey = project.curseForgeApiKey
 	project {
 		id = '247823'
