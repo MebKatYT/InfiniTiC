@@ -36,6 +36,7 @@ repositories {
 
 // Define properties file
 ext.configFile = file "build.properties"
+def numbersFile = new File("buildno.properties")	
 
 configFile.withReader {
     // Load config.  It shall from now be referenced as simply config or project.config
@@ -43,7 +44,6 @@ configFile.withReader {
     prop.load(it)
     project.ext.config = new ConfigSlurper().parse prop
 
-	def numbersFile = new File("buildno.properties")	
 	def numbers = new Properties();
 	numbers.load(numbersFile.newDataInputStream())
 	project.ext.buildNumbers = new ConfigSlurper().parse(numbers)
@@ -118,7 +118,7 @@ minecraft {
 	    runDir = 'eclipse'
     }
 
-	replace '${MODVERSION}', config.mod_version + '.' + config.build_number
+	replace '${MODVERSION}', buildNumbers.mod_version + '.' + buildNumbers.build_number
 	replace '${MCVERSION}', config.minecraft_version
 
 }
@@ -161,7 +161,7 @@ artifacts {
 
 curseforge {
 
-    def updateJsonFile = file('~/Dropbox/MinecraftModFiles/versions/infinitic.json')
+    def updateJsonFile = file(System.getProperty("user.home") + '/Dropbox/MinecraftModFiles/versions/infinitic.json')
     def updateJson = new JsonSlurper().parse(updateJsonFile) as Map
 	
 	// Ensure there is a section for this MC version
