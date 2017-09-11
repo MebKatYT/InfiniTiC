@@ -134,8 +134,10 @@ public class MaterialData {
 			item = json.getGems()[0];
 		}
 		
-		material.addItem(prefix + suffix, 1, Material.VALUE_Ingot);
-        material.setRepresentativeItem(item);						
+		if (item != null) {
+			material.addItem(prefix + suffix, 1, Material.VALUE_Ingot);
+	        material.setRepresentativeItem(item);									
+		}
 		integration = new MaterialIntegration(prefix + suffix, material, fluid, suffix);
 		if(json.canCraftToolForge) {			
 			integration.toolforge();
