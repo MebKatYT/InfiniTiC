@@ -192,7 +192,7 @@ task lakPublish(dependsOn: curseforge) {
 		    updateJsonFile.write(JsonOutput.prettyPrint(JsonOutput.toJson(updateJson)))
 	    }
 	
-	    def cmd = "git tag -a v${buildNumbers.mod_version}.${buildNumbers.build_number}"
+	    def cmd = "git tag -a v${buildNumbers.mod_version}.${buildNumbers.build_number} -m ''"
 	    println cmd.execute().text.split().size()
 		//def proc = cmd.execute()
 		//proc.waitFor()
