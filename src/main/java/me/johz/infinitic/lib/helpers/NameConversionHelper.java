@@ -156,7 +156,7 @@ public class NameConversionHelper {
 		} else {
 			List<ItemStack> l = new ArrayList<ItemStack>();
 			ItemStack i = getItem(name);
-			if (i.isEmpty())
+			if (i == null || i.getItem() == null)
 			{
 				InfiniTiC.LOGGER.warn("Unable to find a material named " + item.itemname);
 			}
