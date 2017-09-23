@@ -132,13 +132,13 @@ public class InfiniTiC {
 		ResourceLocation regName = new ResourceLocation(InfiniTiC.MODID, name);
 		block.setRegistryName(regName);
 		GameRegistry.register(block);
-		Item item = new ItemBlock(block).setRegistryName(regName);
-		GameRegistry.register(item);
+		Item fluidItem = new ItemBlock(block).setRegistryName(regName);
+		GameRegistry.register(fluidItem);
 
 		InfiniFluidStateMapper mapper = new InfiniFluidStateMapper(fluid);
 		// item-model
-		ModelLoader.registerItemVariants(item);
-		ModelLoader.setCustomMeshDefinition(item, mapper);
+		ModelLoader.registerItemVariants(fluidItem);
+		ModelLoader.setCustomMeshDefinition(fluidItem, mapper);
 		// block-model
 		ModelLoader.setCustomStateMapper(block, mapper);
 	}
