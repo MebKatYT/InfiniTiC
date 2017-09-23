@@ -86,7 +86,6 @@ public class MaterialData {
 	    		if(side == Side.CLIENT) {
 	    			
 	    			if (fluid != null) {
-		    		    Item fluidItem = Item.getItemFromBlock(block);
 		    		    InfiniFluidStateMapper mapper = new InfiniFluidStateMapper(fluid);
 		    		    // item-model
 		    		    ModelLoader.registerItemVariants(fluidItem);
@@ -310,10 +309,9 @@ public class MaterialData {
 		    .setUnlocalizedName(InfiniTiC.MODID + "." + name)  //For localization
 		    .setRegistryName(regName);
 	    GameRegistry.register(block);
-		GameRegistry.register(
-			new ItemBlock(block)
-				.setRegistryName(regName)
-		);
+
+	    fluidItem = new ItemBlock(block).setRegistryName(regName);
+		GameRegistry.register(fluidItem);
 
 		FluidRegistry.addBucketForFluid(fluid);
 		
