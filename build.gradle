@@ -133,7 +133,7 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         include '**/*.info'
         // Replace version and mc_version
-        expand 'version': config.mod_version, 'mc_version':config.minecraft_version
+        expand 'version': buildNumbers.mod_version + '.' + buildNumbers.build_number, 'mc_version': config.minecraft_version
     }
         
     // Copy everything else that's not text
