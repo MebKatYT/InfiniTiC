@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import slimeknights.mantle.client.book.BookLoader;
 import slimeknights.tconstruct.library.fluid.FluidMolten;
 import slimeknights.tconstruct.smeltery.block.BlockMolten;
@@ -81,28 +82,32 @@ public class InfiniTiC {
 	    	for (MaterialData mat: MATERIALS) {
 	    		mat.preInit(e.getSide());
 	    	}
-	    		    	
-	    	try {
-		    	resourceManager = new ResourceManager();
-		    	Field listenersField = SimpleReloadableResourceManager.class.getDeclaredField("reloadListeners");
-		    	listenersField.setAccessible(true);
 
-		    	@SuppressWarnings("unchecked")
-			ArrayList<IResourceManagerReloadListener> reloadListeners = 
-				(ArrayList<IResourceManagerReloadListener>)
-				listenersField.get((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()
-			);
-		    	int i = 0;
-		    	for (IResourceManagerReloadListener listener : reloadListeners) {
-		    		if (listener instanceof BookLoader) {
-		    			break;
-		    		}
-		    		i++;
-		    	}
-		    	reloadListeners.add(i, resourceManager);
-		} catch (Exception ex) {
-			InfiniTiC.LOGGER.error("Something went wrong while attemping to inject our resource re-loader just before the BookLoader.  Doing it the old-fasioned way!", ex);
-	        ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(resourceManager);
+		if (e.getSide() == Side.CLIENT) {
+			try {
+				resourceManager = new ResourceManager();
+				Field listenersField = SimpleReloadableResourceManager.class.getDeclaredField("reloadListeners");
+				listenersField.setAccessible(true);
+
+				@SuppressWarnings("unchecked")
+				ArrayList<IResourceManagerReloadListener> reloadListeners = 
+					(ArrayList<IResourceManagerReloadListener>) 
+					listenersField.get((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager());
+				int i = 0;
+				for (IResourceManagerReloadListener listener : reloadListeners) {
+					if (listener instanceof BookLoader) {
+						break;
+					}
+					i++;
+				}
+				reloadListeners.add(i, resourceManager);
+			} catch (Exception ex) {
+				InfiniTiC.LOGGER.error(
+						"Something went wrong while attemping to inject our resource re-loader just before the BookLoader.  Doing it the old-fasioned way!",
+						ex);
+				((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager())
+						.registerReloadListener(resourceManager);
+			}
 		}
 
 		//Event Handler... to handle all our events!
