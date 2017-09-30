@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
@@ -126,7 +127,7 @@ public class ClientProxy extends CommonProxy {
 	    	for (MaterialData mat : InfiniTiC.MATERIALS) {
 	    		if (mat.fluid != null) {
 		    		model = new ModelFluid(mat.fluid);
-		    		baked = model.bake(model.getDefaultState(), Attributes.DEFAULT_BAKED_FORMAT, textureGetter);
+		    		baked = model.bake(model.getDefaultState(), DefaultVertexFormats.ITEM, textureGetter);
 		    		location = new ModelResourceLocation(InfiniTiC.MODID + ":fluid_block", mat.fluid.getName());
 		    		event.getModelRegistry().putObject(location, baked);	    			
 	    		}
